@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+<body>
+    <form action="" method="POST">
+        <input type="text" name="fname" placeholder="First Name:" required autocomplete="off" value="<%= values.fname %>">
+        <input type="text" name="lname" placeholder="Last Name:" required autocomplete="off" value="<%= values.lname %>">
+        <input type="email" name="email" placeholder="Email:" required autocomplete="off" value="<%= values.email %>">
+        <input type="password" name="password" placeholder="Password:" required autocomplete="off" value="<%= values.password %>">
+        <input type="password" name="cnfpassword" placeholder="Confirm Password:" required autocomplete="off" value="<%= values.cnfpassword %>">
+        <input type="submit" value="Register">
+    </form>
+    <% if (error) { %>
+        <p><%= error %></p>
+    <% } %>
+</body>
+</html>
