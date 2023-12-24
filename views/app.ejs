@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Projects</title>
+    <style>
+        .container {
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+        }
+        .leftMenu {
+            width: 22vw;
+            background-color: #000;
+        }
+        .rightMenu {
+            width: 78vw;
+            background-color: #141414;
+            padding: 2vw;
+        }
+        .rightMenu h1 {
+            color: white;
+            font-size: 3em;
+            margin: 0;
+            margin-bottom: 3vh;
+        }
+        .mainBtn {
+            padding: 10px 15px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            background-color: #1900ff;
+            color: white;
+            font-family: 'Outfit';
+            font-size: 1.2em;
+            transition: 0.3s;
+        }
+        .mainBtn:hover {
+            background-color: #0d0081;
+        }
+        .rightMenu h2 {
+            color: white;
+            font-size: 1.5em;
+            margin: 0;
+            margin-top: 10vh;
+        }
+        .popup {
+            width: 100vw;
+            height: 100vh;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2;
+        }
+        .popupBox {
+            width: 40vw;
+            background-color: #222;
+            animation-name: zoomIn;
+            animation-duration: 0.4s;
+            animation-fill-mode: forwards;
+            text-align: center;
+            color: white;
+        }
+        .popupBox h1 {
+            font-size: 2em;
+            margin: 0px;
+            margin: 2vw 0;
+        }
+        .popupBox input[type=text] {
+            width: 36vw;
+            padding: 10px 15px;
+            font-size: 1.2em;
+            outline: none;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Outfit';
+        }
+        .popupBox input[type=submit] {
+            margin: 3.5vh 0;
+        }
+        .projects {
+            display: flex;
+            width: 74vw;
+            margin: 4vh 0;
+        }
+        .project {
+            width: 22vw;
+            height: 22vw;
+            background-color: black;
+            margin-left: 2vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.5em;
+        }
+        .projectLink {text-decoration: none;}
+        @keyframes zoomIn {
+            0% {transform: scale(0, 0)}
+            100% {transform: scale(1, 1)}
+        }
+    </style>
+</head>
+<body>
+    <!-- <form action="/app/new-project" method="POST">
+        <input type="text" name="projectName" placeholder="Name:">
+        <input type="submit">
+    </form> -->
+
+    <%- include('./partials/navbar') %>
+    <div class="popup" id="newProjectPopup">
+        <div class="popupBox">
+            <h1>New Project</h1>
+            <form action="/app/new-project" method="POST">
+                <input type="text" name="projectName" placeholder="Project Name:" required autocomplete="off">
+                <input type="submit" value="Create It!" class="mainBtn">
+                <% if (error) { %>
+                <script>document.getElementById('newProjectPopup').style.display = 'flex'</script>
+                <p style="color: red;"><%= error %></p>
+                <% } %>
+            </form>
+        </div>
+    </div>
+    <div class="container">
+        <div class="leftMenu">
+
+        </div>
+        <div class="rightMenu">
+            <h1>Welcome, <%= user.fname %></h1>
+            <button class="mainBtn" onclick="showNewProject()">New Project</button>
+            <button class="mainBtn" style="margin-left: 2vw;">Edit Profile</button>
+            <h2>Your Projects</h2>
+            <div class="projects">
+                <% if (projects.length == 0) { %>
+                <p style="font-size: 1.1em; color: #bbb; font-style: italic">You have made no projects yet.</p>
+                <% } %>
+                <% projects.forEach((item, index) => { %>
+                    <a href="/app/<%= item.projectName %>" class="projectLink" target="_blank"><div class="project"><%= item.projectName %></div></a>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+    <script>
+        function showNewProject() {
+            document.getElementById('newProjectPopup').style.display = 'flex'
+        }
+        window.onclick = (e) => {
+            if (e.target == document.getElementById('newProjectPopup')) {
+                document.getElementById('newProjectPopup').style.display = 'none'
+            }
+        }
+    </script>
+</body>
+</html>
